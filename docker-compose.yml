@@ -1,6 +1,7 @@
 # https://docs.docker.com/compose/environment-variables/
 services:
   postgres:
+    container_name: MattermostPostgresSQL
     image: postgres:${POSTGRES_IMAGE_TAG}
     restart: ${RESTART_POLICY}
     security_opt:
@@ -60,6 +61,14 @@ services:
 
       # additional settings
       - MM_SERVICESETTINGS_SITEURL
+    networks:
+      - default
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    name: proxy
 
 # If you use rolling image tags and feel lucky watchtower can automatically pull new images and
 # instantiate containers from it. https://containrrr.dev/watchtower/
